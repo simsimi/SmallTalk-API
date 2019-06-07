@@ -1,1 +1,1 @@
-# SWS-SmallTalk-API
+# SmallTalk API
