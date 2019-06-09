@@ -15,7 +15,7 @@ https://workshop.simsimi.com/document
 <img src="https://workshop.simsimi.com/static/img/smalltalk_diagram_02.png" width="600px" alt="일상대화 API 개념도">
 
 ## 기본요청
-일상대화 API 엔드포인트(`https://wsapi.simsimi.com/{VERSION}/talk`)를 향해 프로젝트키, 필수파라미터(`utext`, `lang`)를 명시하여 POST 요청하면 응답을 받을 수 있습니다.
+일상대화 API 엔드포인트(`https://wsapi.simsimi.com/{VERSION}/talk`)를 향해 프로젝트키, 필수파라미터(`utext`, `lang`)를 명시하여 POST 요청하면 응답을 받을 수 있습니다. 
 
 #### 요청예시
 ``` bash
@@ -47,6 +47,7 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
 - `request` : 요청 본문
 - `status`, `statusMessage` : 상태정보 ([상태코드표](#상태코드표) 참조)
 
+## [응답 제어하기](/응답-제어하기.md)
 
 ## 지원언어 및 언어코드
 대부분의 언어코드는 ISO-639-1과 동일하지만, 다른 사례(*)가 있으니 주의하세요.
