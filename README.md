@@ -1,7 +1,7 @@
 <style
   type="text/css">
 h1 {color:#333333;}
-p {color:olive;}
+code {color:olive;}
 </style>
 
 https://workshop.simsimi.com/document
