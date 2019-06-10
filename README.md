@@ -8,14 +8,14 @@ https://workshop.simsimi.com/document
 
 <img src="https://workshop.simsimi.com/static/img/smalltalk_diagram_01.png" width="300px" alt="대화세트 개념도">
 
-심심이 대화처리엔진(AICR)은 수많은 대화세트들이 쌓여 있는 대화세트 저장소에서 적절한 응답을 찾는 작업을 합니다. 일상대화 API를 통해 요청이 접수되면 AICR은 대화세트 저장소에서 요청문장(`utext`)과 유사도 등의 관련성이 높은 질문문장(`qtext`)들을 찾아서 후보군을 만들고, 요청에 포함된 파라미터들과 다른 조건들을 고려하여 가장 적절한 하나의 대화세트를 선택합니다.
+심심이 대화처리엔진(AICR)은 수많은 대화세트들이 쌓여 있는 대화세트 저장소에서 적절한 응답을 찾는 작업을 합니다. 일상대화 API를 통해 요청이 접수되면 AICR은 대화세트 저장소에서 사용자문장(`utext`)과 유사도 등의 관련성이 높은 질문문장(`qtext`)들을 찾아서 후보군을 만들고, 요청에 포함된 파라미터들과 다른 조건들을 고려하여 가장 적절한 하나의 대화세트를 선택합니다.
 
 일상대화 API가 제공하는 답변문장(`atext`)은 이 과정에서 선택된 대화세트의 답변문장(`atext`)입니다. 예를 들어 요청의 `utext`가 "밥은 먹었어?"일 때 일상대화 API는 다음과 같은 과정을 거쳐 `atext`로 "응 먹었어"를 반환합니다.
 
 <img src="https://workshop.simsimi.com/static/img/smalltalk_diagram_02.png" width="600px" alt="일상대화 API 개념도">
 
 ## 기본요청
-일상대화 API 엔드포인트(`https://wsapi.simsimi.com/{VERSION}/talk`)를 향해 프로젝트키, 필수파라미터(`utext`, `lang`)를 명시하여 POST 요청하면 응답을 받을 수 있습니다. 
+일상대화 API 엔드포인트(`https://wsapi.simsimi.com/{VERSION}/talk`)를 향해 프로젝트키, 필수파라미터 2개(사용자문장 `utext`, 언어코드 `lang`)를 명시하여 POST 요청하면 응답을 받을 수 있습니다. 
 
 #### 요청예시
 ``` bash
@@ -27,7 +27,7 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
             "lang": "ko" 
      }'                     
 ```
-- `utext` : 사용자가 챗봇에 입력한 메시지
+- `utext` : 사용자문장
 - `lang` : 사용자의 언어코드([일상대화 API가 지원하는 언어 및 언어코드](#지원언어-및-언어코드))
 
 #### 응답예시
@@ -43,11 +43,48 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
     }
 }    
 ```
-- `atext` : 답변, 요청의 `utext`에 대해 AICR이 선택한 talkset 의 `atext` ([작동원리](#작동원리) 참조)
+- `atext` : 답변문장 
 - `request` : 요청 본문
 - `status`, `statusMessage` : 상태정보 ([상태코드표](#상태코드표) 참조)
 
-## [응답 제어하기](/응답-제어하기.md)
+## 응답 제어하기
+
+SmallTalk API는 응답을 조절하기 위한 옵션들을 제공합니다. 예컨대 대한민국 또는 미국에서 생성된 대화세트 중에서 나쁜말 확률 70% 이하인 문장만을 답변으로 제공받고자 하는 경우 다음과 같이 `country`, `atext_bad_prob_max` 두 개의 옵션을 추가해서 요청하면 됩니다.
+#### 요청예시
+``` bash
+curl -X POST https://wsapi.simsimi.com/190410/talk \
+     -H "Content-Type: application/json" \
+     -H "x-api-key: PASTE_YOUR_PROJECT_KEY_HERE" \
+     -d '{
+            "utext":"안녕",
+            "lang": "ko",
+            "country" : ["KR", "US"],
+            "atext_bad_prob_max": 0.7
+     }'  
+ ```
+## 응답제어 옵션
+
+- `country` \
+대화세트 생성국가 필터. 영어, 스페인어와 같이 여러 국가에서 사용되는 언어에서 특정 국가(들)에서 생성한 대화세트들로 응답후보를 한정할 수 있습니다. ([ISO-3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) 국가코드를 10개까지 열거할 수 있음, 미지정시 모든 국가를 대상으로 함.) \
+　
+- `atext_bad_prob_max` \
+`qtext_bad_prob_max` \
+`talkset_bad_prob_max` \
+문장의 나쁜말확률 최댓값. 챗봇의 대답에서 나쁜말을 억제하는 용도로 사용합니다. 많은 경우 응답문장 나쁜말확률 최댓값(`atext_bad_prob_max`)을 적절히 조절하면 충분하며, 질문문장과 대화세트의 나쁜말확률(`qtext_bad_prob_max`, `talkset_bad_prob_max`)을 추가로 지정해서 더 보수적으로 제어할 수 있습니다. 대화세트의 나쁜말확률은 질문문장과 답변문장을 합쳐서 하나의 문장으로 보고 판별합니다. 소숫점 1자리의 확률값 (0.0 ~ 1.0, 미지정시 기본값 1.0) \
+　
+- `atext_bad_prob_min` \
+응답문장의 나쁜말확률 최솟값. 챗봇이 나쁜말을 주로 하도록 할 때 사용할 수 있는 옵션입니다. 상당수 챗봇 플랫폼들은 컨텐츠의 건전성과 관련된 제한이 있으니 사용에 유의하시기 바랍니다. 소숫점 1자리의 확률값 (0.0 ~ 1.0, 미지정시 기본값 0.0) \
+　
+- 응답문장의 길이 범위 지정 \
+챗봇의 성격이나 대화 상황에 따라서 응답문장의 길이 범위를 정할 수 있습니다.(1 ~ 256의 정수)
+  - `atext_length_max` (미지정시 기본값 256)
+  - `atext_length_min` (미지정시 기본값 1) \
+　
+- 대화세트(`talkset`) 등록일 범위 지정 \
+최신 트랜드에 민감한 챗봇, 과거에 머물러 있는 챗봇 등을 구현하기 위해 사용할 수 있습니다(`yyyy-MM-dd HH:mm:ss` 형식으로 사용)
+  - `regist_date_max` (미지정시 기본값 현재시간)
+  - `regist_date_min` (미지정시 기본값 최초의 대화세트 등록일)
+　
 
 ## 지원언어 및 언어코드
 대부분의 언어코드는 ISO-639-1과 동일하지만, 다른 사례(*)가 있으니 주의하세요.
