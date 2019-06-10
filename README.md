@@ -1,5 +1,6 @@
 <style
   type="text/css">
+style {color:#ffffff;display:hidden}
 h1, h2, h3, h4, h5, h6 {color:#333333;}
 p, li {color:#333333}
 code {color:#000080;}
@@ -122,7 +123,7 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
 ```
 ## 추가정보 요청 옵션
 - `qtext` : 답변문장(`atext`)과 쌍인 질문문장(`qtext`)
-- `country` : 대화세트 생성 국가의 국가코드([ISO-3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)
+- `country` : 대화세트 생성 국가의 국가코드([ISO-3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements))
 - `atext_bad_prob` :  답변문장(`atext`)의 나쁜말 확률
 - `atext_bad_type` : 답변문장의 나쁜말 확률(`atext_bad_prob`) 추정 시 사용한 판별 방식. `STAPX`, `DPD`, `WPF`, `HB10A` 중 하나. (판별방식에 대한 자세한 설명)
 - `regist_date` : 대화세트 생성 시점
