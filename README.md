@@ -84,8 +84,6 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
 - `regist_date_max`, `regist_date_min` : 대화세트(`talkset`) 등록일 범위 지정. 최신 트랜드에 민감한 챗봇, 과거에 머물러 있는 챗봇 등을 구현하기 위해 사용할 수 있습니다(`yyyy-MM-dd HH:mm:ss` 형식으로 사용, 미지정시 기본값 `regist_date_max`는 현재시간, `regist_date_min`은 최초의 대화세트 등록일)　　
 　  
 
-#### 나쁜말확률
-나쁜말확률은 불건전한(또는 악성) 문장을 구별하기 위해 심심이팀이 개발한 지표로써, 뛰어난 성능을 보이는 고급 딥러닝 기술을 포함해 다양한 기법을 활용하여 산출합니다. 자세한 내용은 다음 블로그 포스트를 참고하시기 바랍니다. ([심심이 대화 품질 - 나쁜말 필터 관련 기술](http://blog.simsimi.com/2019/03/blog-post.html))
 
 ## 추가정보 
 일상대화 API는 응답에 대한 자세한 정보를 얻을 수 있는 방법을 제공합니다. 요청 본문의 `cf_info` 오브젝트에 제공받고자 하는 추가정보들을 예시와 같이 열거하여 요청합니다.
@@ -126,7 +124,7 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
 - `qtext` : 답변문장(`atext`)과 쌍인 질문문장(`qtext`)
 - `country` : 대화세트 생성 국가의 국가코드([ISO-3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements))
 - `atext_bad_prob` :  답변문장(`atext`)의 나쁜말 확률
-- `atext_bad_type` : 답변문장의 나쁜말 확률(`atext_bad_prob`) 추정 시 사용한 판별 방식. `STAPX`, `DPD`, `WPF`, `HB10A` 중 하나. (판별방식에 대한 자세한 설명)
+- `atext_bad_type` : 답변문장의 나쁜말 확률(`atext_bad_prob`) 추정 시 사용한 판별 방식. `STAPX`, `DPD`, `WPF`, `HB10A` 중 하나. ([판별방식에 대한 자세한 설명](http://blog.simsimi.com/2019/03/blog-post.html) )
 - `regist_date` : 대화세트 생성 시점
 
 
@@ -227,6 +225,9 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
 |403 |	Unauthorized | 유효하지 않은 API Key |
 |429 |	Limit Exceeded | 사용 한도 초과 |
 |500 |	Server error | 서버 오류 |
+
+## 나쁜말확률
+나쁜말확률은 불건전한(또는 악성) 문장을 구별하기 위해 심심이팀이 개발한 지표입니다. 뛰어난 성능을 보이는 고급 딥러닝 기술을 포함해 다양한 기법을 동원하여 산출합니다. 자세한 내용은 다음 블로그 포스트를 참고하시기 바랍니다. ([심심이 대화 품질 - 나쁜말 필터 관련 기술](http://blog.simsimi.com/2019/03/blog-post.html))
 
 
 TBD
