@@ -55,10 +55,11 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
 - `request` : 요청 본문
 - `status`, `statusMessage` : 상태정보 ([상태코드표](#상태코드표) 참조)
 
-## 응답 제어하기
+## 응답제어
+각 챗봇의 성격에 맞는 응답을 제공하기 위해 응답을 조절하기 위한 옵션들을 제공합니다.
 
-SmallTalk API는 응답을 조절하기 위한 옵션들을 제공합니다. 예컨대 대한민국 또는 미국에서 생성된 대화세트 중에서 [나쁜말확률](#나쁜말확률) 70% 이하인 문장만을 답변으로 제공받고자 하는 경우 다음과 같이 `country`, `atext_bad_prob_max` 두 개의 옵션을 추가해서 요청하면 됩니다.
 #### 요청예시
+대한민국 또는 미국에서 생성된 대화세트 중에서 [나쁜말확률](#나쁜말확률) 70% 이하인 문장만을 답변으로 제공받고자 하는 경우 다음과 같이 `country`, `atext_bad_prob_max` 두 개의 옵션을 추가해서 요청하면 됩니다.
 ``` bash
 curl -X POST https://wsapi.simsimi.com/190410/talk \
      -H "Content-Type: application/json" \
@@ -70,7 +71,7 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
             "atext_bad_prob_max": 0.7
      }'  
  ```
-## 응답제어 옵션
+#### 응답제어 옵션
 
 - `country` : 대화세트 생성국가 필터. 영어, 스페인어와 같이 여러 국가에서 사용되는 언어에서 특정 국가(들)에서 생성한 대화세트들로 응답후보를 한정할 수 있습니다. ([ISO-3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) 국가코드를 10개까지 열거할 수 있음, 미지정시 모든 국가를 대상으로 함.)  
 　
@@ -83,10 +84,10 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
 - `regist_date_max`, `regist_date_min` : 대화세트(`talkset`) 등록일 범위 지정. 최신 트랜드에 민감한 챗봇, 과거에 머물러 있는 챗봇 등을 구현하기 위해 사용할 수 있습니다(`yyyy-MM-dd HH:mm:ss` 형식으로 사용, 미지정시 기본값 `regist_date_max`는 현재시간, `regist_date_min`은 최초의 대화세트 등록일)　　
 　  
 
-## 나쁜말확률
+#### 나쁜말확률
 나쁜말확률은 불건전한(또는 악성) 문장을 구별하기 위해 심심이팀이 개발한 지표로써, 뛰어난 성능을 보이는 고급 딥러닝 기술을 포함해 다양한 기법을 활용하여 산출합니다. 자세한 내용은 다음 블로그 포스트를 참고하시기 바랍니다. ([심심이 대화 품질 - 나쁜말 필터 관련 기술](http://blog.simsimi.com/2019/03/blog-post.html))
 
-## 추가정보 요청하기
+## 추가정보 
 일상대화 API는 응답에 대한 자세한 정보를 얻을 수 있는 방법을 제공합니다. 요청 본문의 `cf_info` 오브젝트에 제공받고자 하는 추가정보들을 예시와 같이 열거하여 요청합니다.
 #### 요청예시
 ``` bash
@@ -121,7 +122,7 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
 }                           
   
 ```
-## 추가정보 요청 옵션
+#### 추가정보 요청 옵션
 - `qtext` : 답변문장(`atext`)과 쌍인 질문문장(`qtext`)
 - `country` : 대화세트 생성 국가의 국가코드([ISO-3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements))
 - `atext_bad_prob` :  답변문장(`atext`)의 나쁜말 확률
