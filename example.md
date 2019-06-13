@@ -1,5 +1,7 @@
 ## SmallTalk API Examples
 
+[NodeJS](#nodejs) | [NodeJS (Request)](#nodejs-request) | [NodeJS (Unirest)](#nodejs-unirest) | [Python](#python) | [Python (http.client (Python 3))](#python-httpclient-python-3) | [Python (Requests)](#python-requests) | [php](#php) | [PHP (HttpRequest)](#php-httprequest) | [PHP (pecl_http)](#php-pecl_http) | [PHP (cURL)](#php-curl) | [R](#r) | [C#](#c) | [C (LibCurl)](#c-libcurl) | [C# (RestSharp)](#c-restsharp) | [Go](#go) | [Java (OK HTTP)](#java-ok-http) | [Java (Unirest)](#java-unirest) | [Javascript (jQuery ajax)](#javascript-jquery-ajax) | [Javascript (XHR)](#javascript-xhr) | [NodeJS (Native)](#nodejs-native) | [Objective-c (NSURL)](#objective-c-nsurl) | [Ruby (NET::http)](#ruby-nethttp) | [SWIFT (NSURL)](#swift-nsurl) | [Restlet Client](#restlet-client) 
+
 ### nodejs
 ``` javascript
 var request = require('request');
