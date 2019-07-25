@@ -101,7 +101,7 @@ curl -X POST https://wsapi.simsimi.com/190410/talk \
                   "atext_bad_prob",
                   "atext_bad_type",
                   "regist_date"
-            ],
+            ]
      }'         
 ```
 #### 응답예시
